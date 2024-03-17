@@ -7,4 +7,5 @@ kolom jenis algoritma, jumlah bilangan dan waktu eksekusi (ms).
 
 # Persyaratan
 -Compiler C
+
 -Terminal
