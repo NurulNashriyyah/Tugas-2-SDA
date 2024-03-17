@@ -5,6 +5,7 @@
 
 #define MAX 1000000
 
+// Fungsi bubbleSort yang digunakan untuk mengurutkan bilangan menggunakan algoritma Bubble Sort
 void bubbleSort(int arr[], int n)
 {
     int i, j, temp;
@@ -28,6 +29,7 @@ void bubbleSort(int arr[], int n)
     }
 }
 
+// Fungsi selectionSort yang digunakan untuk mengurutkan bilangan menggunakan algoritma Selection Sort
 void selectionSort(int arr[], int n)
 {
     int i, j, min_idx, temp;
@@ -48,6 +50,7 @@ void selectionSort(int arr[], int n)
     }
 }
 
+// Fungsi insertionSort yang digunakan untuk mengurutkan bilangan menggunakan algoritma Insertion Sort
 void insertionSort(int arr[], int n)
 {
     int i, key, j;
@@ -66,6 +69,7 @@ void insertionSort(int arr[], int n)
     }
 }
 
+// Fungsi saveToFile untuk menyimpan bilangan-bilangan yang belum terurut dan sudah terurut
 void saveToFile(char *filename, int arr[], int n, char *title)
 {
     FILE *fp;
@@ -84,13 +88,16 @@ void saveToFile(char *filename, int arr[], int n, char *title)
     fclose(fp);
 }
 
+// Fungsi utama
 int main()
 {
     int arr[MAX], temp[MAX], n = MAX, i;
     clock_t start, end;
     double cpu_time_used;
     char filename[20] = "numbers.txt";
+    char title[35];
 
+    // Membuat header tabel
     printf("| %-15s | %-16s | %-20s |\n", "Jenis Algoritma", "Jumlah Bilangan", "Waktu Eksekusi (ms)");
     printf("|-----------------|------------------|----------------------|\n");
 
@@ -116,7 +123,8 @@ int main()
         printf("| %-15s | %15dk | %20.2f |\n", "Bubble Sort", n / 1000, cpu_time_used * 1000);
 
         // Menyimpan bilangan yang sudah terurut dengan bubble sort
-        saveToFile(filename, temp, n, "Sorted Numbers (Bubble Sort)");
+        sprintf(title, "Sorted Numbers (Bubble Sort) - %d Numbers", n);
+        saveToFile(filename, temp, n, title);
     }
     
     for (int n = 100000; n <= MAX; n += 100000)
@@ -132,7 +140,8 @@ int main()
         printf("| %-15s | %15dk | %20.2f |\n", "Selection Sort", n / 1000, cpu_time_used * 1000);
 
         // Menyimpan bilangan yang sudah terurut dengan selection sort
-        saveToFile(filename, temp, n, "Sorted Numbers (Selection Sort)");
+        sprintf(title, "Sorted Numbers (Selection Sort) - %d Numbers", n);
+        saveToFile(filename, temp, n, title);
     }
     
     for (int n = 100000; n <= MAX; n += 100000)
@@ -148,7 +157,8 @@ int main()
         printf("| %-15s | %15dk | %20.2f |\n", "Insertion Sort", n / 1000, cpu_time_used * 1000);
 
         // Menyimpan bilangan yang sudah terurut dengan insertion sort
-        saveToFile(filename, temp, n, "Sorted Numbers (Insertion Sort)");
+        sprintf(title, "Sorted Numbers (Insertion Sort) - %d Numbers", n);
+        saveToFile(filename, temp, n, title);
     }
     return 0;
 }
