@@ -13,10 +13,13 @@ kolom jenis algoritma, jumlah bilangan dan waktu eksekusi (ms).
 # Cara Menjalankan Program
 1. Buka Terminal
 2. Ubah direktori ke lokasi file C
+
    cd _direktori file c_
 3. Kompilasi kode program
+
    gcc 2208107010030_Simple_Sorting -o _nama_program_
 4. Jalankan program
+   
    ./_nama_program_
 5. Program berhasil dijalankan
 
