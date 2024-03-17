@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+#include <string.h>
 
 #define MAX 1000000
 
@@ -64,87 +65,90 @@ void insertionSort(int arr[], int n)
         arr[j + 1] = key;
     }
 }
-void saveToFile(char* filename, int arr[], int n)
+
+void saveToFile(char *filename, int arr[], int n, char *title)
 {
     FILE *fp;
-    fp = fopen(filename, "w");
+    fp = fopen(filename, "a");
     if (fp == NULL)
     {
         printf("Gagal membuka file.\n");
         exit(1);
     }
+    fprintf(fp, "%s\n", title);
     for (int i = 0; i < n; i++)
     {
         fprintf(fp, "%d\n", arr[i]);
     }
+    fprintf(fp, "\n");
     fclose(fp);
 }
 
 int main()
 {
-    int arr[MAX], n = MAX, i;
+    int arr[MAX], temp[MAX], n = MAX, i;
     clock_t start, end;
     double cpu_time_used;
-    char filename[20];
+    char filename[20] = "numbers.txt";
 
     printf("| %-15s | %-16s | %-20s |\n", "Jenis Algoritma", "Jumlah Bilangan", "Waktu Eksekusi (ms)");
     printf("|-----------------|------------------|----------------------|\n");
 
-    for (int size = 100000; size <= MAX; size += 100000)
+    // Menghasilkan bilangan acak
+    for (i = 0; i < n; i++)
     {
-        // Menghasilkan bilangan acak
-        for (i = 0; i < size; i++)
-        {
-            arr[i] = rand();
-        }
+        arr[i] = rand();
+    }
 
-        // Menyimpan bilangan yang belum terurut
-        sprintf(filename, "unsorted_%dk.txt", size / 1000);
-        saveToFile(filename, arr, size);
+    // Menyimpan bilangan yang belum terurut
+    saveToFile(filename, arr, n, "Unsorted Numbers");
+
+    for (int n = 100000; n <= MAX; n += 100000)
+    {
+        // Copy array untuk digunakan dalam setiap algoritma pengurutan
+        memcpy(temp, arr, n * sizeof(int));
 
         // Mengurutkan bilangan dengan bubble sort dan mencatat waktu eksekusi
         start = clock();
-        bubbleSort(arr, size);
+        bubbleSort(temp, n);
         end = clock();
         cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-        printf("| %-15s | %15dk | %20.2f |\n", "Bubble Sort", size / 1000, cpu_time_used * 1000);
-    }
+        printf("| %-15s | %15dk | %20.2f |\n", "Bubble Sort", n / 1000, cpu_time_used * 1000);
 
-    for (int size = 100000; size <= MAX; size += 100000)
+        // Menyimpan bilangan yang sudah terurut dengan bubble sort
+        saveToFile(filename, temp, n, "Sorted Numbers (Bubble Sort)");
+    }
+    
+    for (int n = 100000; n <= MAX; n += 100000)
     {
-        // Menghasilkan bilangan acak
-        for (i = 0; i < size; i++)
-        {
-            arr[i] = rand();
-        }
+        // Copy array untuk digunakan dalam setiap algoritma pengurutan
+        memcpy(temp, arr, n * sizeof(int));
 
         // Mengurutkan bilangan dengan selection sort dan mencatat waktu eksekusi
         start = clock();
-        selectionSort(arr, size);
+        selectionSort(temp, n);
         end = clock();
         cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-        printf("| %-15s | %15dk | %20.2f |\n", "Selection Sort", size / 1000, cpu_time_used * 1000);
-    }
+        printf("| %-15s | %15dk | %20.2f |\n", "Selection Sort", n / 1000, cpu_time_used * 1000);
 
-    for (int size = 100000; size <= MAX; size += 100000)
+        // Menyimpan bilangan yang sudah terurut dengan selection sort
+        saveToFile(filename, temp, n, "Sorted Numbers (Selection Sort)");
+    }
+    
+    for (int n = 100000; n <= MAX; n += 100000)
     {
-        // Menghasilkan bilangan acak
-        for (i = 0; i < size; i++)
-        {
-            arr[i] = rand();
-        }
+        // Copy array untuk digunakan dalam setiap algoritma pengurutan
+        memcpy(temp, arr, n * sizeof(int));
 
         // Mengurutkan bilangan dengan insertion sort dan mencatat waktu eksekusi
         start = clock();
-        insertionSort(arr, size);
+        insertionSort(temp, n);
         end = clock();
         cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
-        printf("| %-15s | %15dk | %20.2f |\n", "Insertion Sort", size / 1000, cpu_time_used * 1000);
+        printf("| %-15s | %15dk | %20.2f |\n", "Insertion Sort", n / 1000, cpu_time_used * 1000);
 
-        // Menyimpan bilangan yang sudah terurut
-        sprintf(filename, "sorted_%dk.txt", size / 1000);
-        saveToFile(filename, arr, size);
+        // Menyimpan bilangan yang sudah terurut dengan insertion sort
+        saveToFile(filename, temp, n, "Sorted Numbers (Insertion Sort)");
     }
-
     return 0;
 }
