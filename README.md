@@ -4,3 +4,7 @@ File ini berisi penyelesaian kasus untuk melakukan generating bilangan secara ac
 lalu melakukan pengurutan menggunakan algoritma bubble sort, selection sort, dan insertion sort.
 Output dari kode program ini adalah hasil evaluasi berbentu tabel yang terdiri dari
 kolom jenis algoritma, jumlah bilangan dan waktu eksekusi (ms).
+
+# Persyaratan
+-Compiler C
+-Terminal
